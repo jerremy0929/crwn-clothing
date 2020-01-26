@@ -5,6 +5,8 @@ import './sign-in.style.scss'
 import FormInput from '../form-input/form-input.component'
 import CustomBbutton from '../custom-button/custom-button.component'
 
+import { signInWithGoogle } from '../../firebase/firebase.utils'
+
 export class SignIn extends Component {
   state = {
     email: '',
@@ -46,7 +48,12 @@ export class SignIn extends Component {
             value={password}
             handleChange={this.handleChange}
           />
-          <CustomBbutton type="submit">sign in</CustomBbutton>
+          <div className="buttons">
+            <CustomBbutton type="submit">sign in</CustomBbutton>
+            <CustomBbutton isGoogleSignIn onClick={signInWithGoogle}>
+              sign in with Google
+            </CustomBbutton>
+          </div>
         </form>
       </div>
     )
