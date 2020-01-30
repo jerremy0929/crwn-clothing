@@ -33,8 +33,6 @@ class App extends Component {
               ...snapshot.data(),
             },
           })
-
-          console.log('state:', this.state)
         })
       }
 
