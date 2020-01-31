@@ -11,6 +11,11 @@
   border: 1px solid black;
   background-color: white;
 
+  .empty-message {
+    margin: 50px auto;
+    font-size: 18px;
+  }
+
   .cart-items {
     display: flex;
     flex-direction: column;
