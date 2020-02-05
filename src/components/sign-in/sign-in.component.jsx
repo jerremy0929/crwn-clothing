@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import FormInput from '../form-input/form-input.component'
@@ -15,64 +15,59 @@ import {
   ButtonsBarContainer,
 } from './sign-in.styles'
 
-export class SignIn extends Component {
-  state = {
+export const SignIn = ({ googleSignInStart, emailSignInStart }) => {
+  const [userCredentials, setUserCredentials] = useState({
     email: '',
     password: '',
-  }
+  })
+  const { email, password } = userCredentials
 
-  handleSubmit = async evt => {
+  const handleSubmit = async evt => {
     evt.preventDefault()
-    const { email, password } = this.state
-    const { emailSignInStart } = this.props
 
     emailSignInStart(email, password)
   }
 
-  handleChange = evt => {
+  const handleChange = evt => {
     const { name, value } = evt.target
-    this.setState({ [name]: value })
+    setUserCredentials({ ...userCredentials, [name]: value })
   }
 
-  render() {
-    const { email, password } = this.state
-    const { googleSignInStart } = this.props
-    return (
-      <SignInContainer>
-        <SignInTitle>I already have an account</SignInTitle>
-        <span>Sign in with your email and password</span>
+  return (
+    <SignInContainer>
+      <SignInTitle>I already have an account</SignInTitle>
+      <span>Sign in with your email and password</span>
 
-        <form onSubmit={this.handleSubmit}>
-          <FormInput
-            required
-            type="email"
-            name="email"
-            label="email"
-            value={email}
-            handleChange={this.handleChange}
-          />
-          <FormInput
-            required
-            type="password"
-            name="password"
-            label="password"
-            value={password}
-            handleChange={this.handleChange}
-          />
-          <ButtonsBarContainer>
-            <CustomBbutton type="submit">SIGN IN</CustomBbutton>
-            <CustomBbutton
-              type="button"
-              isGoogleSignIn
-              onClick={googleSignInStart}
-            >
-              SIGN IN WITH GOOGLE
-            </CustomBbutton>
-          </ButtonsBarContainer>
-        </form>
-      </SignInContainer>
-    )
-  }
+      <form onSubmit={handleSubmit}>
+        <FormInput
+          required
+          type="email"
+          name="email"
+          label="email"
+          value={email}
+          handleChange={handleChange}
+        />
+        <FormInput
+          required
+          type="password"
+          name="password"
+          label="password"
+          value={password}
+          handleChange={handleChange}
+        />
+        <ButtonsBarContainer>
+          <CustomBbutton type="submit">SIGN IN</CustomBbutton>
+          <CustomBbutton
+            type="button"
+            isGoogleSignIn
+            onClick={googleSignInStart}
+          >
+            SIGN IN WITH GOOGLE
+          </CustomBbutton>
+        </ButtonsBarContainer>
+      </form>
+    </SignInContainer>
+  )
 }
 
 const mapDispatchToProps = dispatch => ({
