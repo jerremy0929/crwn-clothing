@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import StripeCheckout from 'react-stripe-checkout'
 
 const StripeCheckoutButton = ({ price }) => {
@@ -7,7 +8,23 @@ const StripeCheckoutButton = ({ price }) => {
 
   const onToken = token => {
     console.log(token)
-    alert('Payment Successful')
+    axios({
+      method: 'post',
+      url: 'payment',
+      data: {
+        token,
+        amount: priceForStripe,
+      },
+    })
+      .then(res => {
+        alert('Payment Successful')
+      })
+      .catch(error => {
+        console.log('Payment Error:', JSON.parse(error))
+        alert(
+          'There was an issue with your payment. Please sure you use provided credit card.',
+        )
+      })
   }
 
   return (
